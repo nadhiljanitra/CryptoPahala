@@ -7,9 +7,28 @@ module.exports = (sequelize, DataTypes) => {
   class Profile extends Model{}
 
   Profile.init({
-    username: DataTypes.STRING,
+    username: {type : DataTypes.STRING,
+      validate:{
+      isUnique(){
+        return Profile.findOne({where:{username:this.username}})
+        .then(uname=>{
+          if(uname){
+            throw new Error
+          }
+        })
+      }}},
     password: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: {type:DataTypes.STRING,
+      validate:{
+        isUnique(){
+          return Profile.findOne({where:{email:this.email}})
+          .then(email=>{
+            if(email){
+              throw new Error
+            }
+          })
+        } , isEmail : true}
+      },
     salt : DataTypes.STRING
   }, {hooks:{beforeCreate:(profile,options)=>{
     let salt = String(Math.random()*4444)
