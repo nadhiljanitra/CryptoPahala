@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   Deed.init({
     name: DataTypes.STRING,
     rating: DataTypes.INTEGER
-  }, {sequelize,modelName:"deed"});
+  }, {sequelize,modelName:"Deed"});
 
 
 
