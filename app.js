@@ -1,16 +1,15 @@
 const express = require('express')
 const app = express()
 const PORT = 3000
+const profile = require('./routes/profileRoutes')
 
-app.use(express.urlencoded({
-  extended: true
-}))
 app.set('view engine', 'ejs')
+app.use(express.urlencoded({extended: true}))
 
-const Model = require('./models')
+app.use('/profile',profile)
 
 app.get('/', (req, res) => {
-  res.sen
+  res.render('home')
 })
 
 app.listen(PORT, () => {
