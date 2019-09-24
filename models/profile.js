@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {hooks:{beforeCreate:(profile,options)=>{
     let salt = String(Math.random()*4444)
       let passwordInput = `${profile.dataValues.password}`
-      let pass = hashPassword(passwordInput,salt)
+      let pass = hashPasswords(passwordInput,salt)
       profile.setDataValue('password',pass)
-      profile.setDataValue('Salt',salt)
+      profile.setDataValue('salt',salt)
   }},sequelize,modelName : "Profile"});
 
 
