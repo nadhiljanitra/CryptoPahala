@@ -1,10 +1,19 @@
-const deedModel = require('../models').deed
+const deedModel = require('../models').Deed
 
-class deedCont {
+class Deed {
   static generateForm(req, res) {
-    res.send('AAA')
-    // res.render('form')
+    deedModel.findAll()
+      .then(result => {
+        res.render('profile/profileForm', {deeds: result})
+      })
+      .catch(err => res.send(err))
+  }
+
+  static getValues(req, res) {
+    let result = req.body
+    
+    // next step: compare result with profiledeed and calculate score
   }
 }
 
-module.exports = deedCont
+module.exports = Deed

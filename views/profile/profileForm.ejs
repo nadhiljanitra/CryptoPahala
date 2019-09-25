@@ -7,6 +7,18 @@
   <title>Registrasi</title>
 </head>
 <body>
-  <h1>Centang perbuatan-perbuatan yang pernah kamu lakukan..</h1>
+  <h1>Pernahkah kamu melakukan perbuatan-perbuatan ini? (Centang yang pernah kamu lakukan)</h1>
+
+  <form action="/profile/form" method="post">
+    <% deeds.forEach(deed => { %>
+      <tr>
+        <td><%= deed.name %></td>
+        <td><input type="checkbox" id="deed<%= deed.id %>" name="<%= deed.id %>"></td>
+        <br>
+      </tr>
+    <% }) %>
+    <input type="submit" value="Submit">
+  </form>
+
 </body>
 </html>
