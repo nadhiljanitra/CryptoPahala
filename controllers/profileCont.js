@@ -19,7 +19,7 @@ class Profile{
       } else {
         let err='Username/Email anda telah dipakai, coba lagi'
         res.render('./profile/profileAdd',{err})
-      }
+      } 
     })
   }
 
