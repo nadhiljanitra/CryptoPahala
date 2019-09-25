@@ -7,10 +7,15 @@ class Profile{
     profileModel.create({
       username : req.body.username,
       password : req.body.password,
-      email : req.body.email 
+      email : req.body.email,
+      login : 0 
     })
     .then(success=>{
-      res.send(success)
+      profileModel.findOne({where:{username:req.body.username}})
+      .then(row=>{
+        console.log(row)
+        res.redirect(`/profile/${row.dataValues.id}/form`)
+      })
     })
     .catch(error=>{
       if(error.message=='Validation error: Validation isEmail on email failed'){
@@ -29,7 +34,12 @@ class Profile{
       if(row){
         let newHash = hashPassword(req.body.password,row.salt)
         if(newHash===row.password){
-          res.send('berhasil login')
+          console.log("masuk===========================>")
+          profileModel.update({login:1},{where:{username:req.body.username}})
+          .then(row=>{
+            console.log(row)
+            res.send('berhasil login')
+          })
         } else {
           let err=`username/password salah`
           res.render('./profile/profileLogin',{err})

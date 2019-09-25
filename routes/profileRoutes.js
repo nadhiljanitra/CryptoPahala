@@ -20,5 +20,4 @@ routes.get('/:id/form', Deed.generateForm)
 // ambil ProfileId sama list of deeds -> masukin ke db profileDeed
 routes.post('/:id/form', ProfileDeed.storeValues)
 
-
 module.exports = routes;
