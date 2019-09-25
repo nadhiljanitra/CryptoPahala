@@ -20,4 +20,6 @@ routes.get('/:id/form', Deed.generateForm)
 // ambil ProfileId sama list of deeds -> masukin ke db profileDeed
 routes.post('/:id/form', ProfileDeed.storeValues)
 
+routes.get('/:id/userpage',Profile.viewProfile) // ini isinya adalah hasil lemparan dari login dan register. masukin datanya dari req.params.id. nanti di findAll({include})
+
 module.exports = routes;

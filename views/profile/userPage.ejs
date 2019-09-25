@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <%let score = 0 %>
+  <p>Username = <%= data.dataValues.username%></p>
+  <% data.dataValues.Deeds.forEach(element => { %>
+    <p>Deeds = <%= element.dataValues.name%> </p>
+    <% score += element.dataValues.rating%>
+ <% });%>
+ <p>Total rating anda adalah</p>
+ <h1><%= score%></h1>
+    <a>klik disini untuk melihat posisi anda</a> 
+    <a>//disini isinya ranking user, data statistik global</a>
+</body> 
+</html>

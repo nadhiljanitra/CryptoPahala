@@ -1,4 +1,5 @@
 const profileModel = require('../models').Profile
+const DeedModel = require('../models').Deed
 const hashPassword = require('../helpers/hashPassword')
 
 class Profile{
@@ -30,16 +31,16 @@ class Profile{
   }
 
   static login(req,res){
+    let profileId
     profileModel.findOne({where:{username:req.body.username}})
     .then(row=>{
       if(row){
         let newHash = hashPassword(req.body.password,row.salt)
         if(newHash===row.password){
-          console.log("masuk===========================>")
+          profileId = row.id
           profileModel.update({login:1},{where:{username:req.body.username}})
           .then(row=>{
-            console.log(row)
-            res.send('berhasil login')
+            res.redirect(`${profileId}/userpage`)
           })
         } else {
           let err=`username/password salah`
@@ -55,7 +56,14 @@ class Profile{
     })
   }
 
-
+  static viewProfile(req,res){
+  profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
+    .then(profile=>{
+      let data = profile[0]
+      res.render("profile/userPage",{data})
+      })
+    .catch(err => console.log(err))
+  }
 
 
 }
