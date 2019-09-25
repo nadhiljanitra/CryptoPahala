@@ -1,7 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Model = sequelize.Sequelize.Model
-  class ProfileDeed extends Model{}
+  class ProfileDeed extends Model{
+
+    
+
+  }
 
 
   ProfileDeed.init({
