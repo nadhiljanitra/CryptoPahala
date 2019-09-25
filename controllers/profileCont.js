@@ -58,11 +58,28 @@ class Profile{
   profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
     .then(profile=>{
       let data = profile[0]
-      console.log("ini data===================================>")
-      console.log(data.dataValues.Deeds[0]);
-      console.log(data.dataValues.Deeds[1]);
-      res.render("profile/userPage",{data})
-      })
+      let input = profile[0]
+      let score = 0
+      for ( let i = 0; i < input.dataValues.Deeds.length; i++){
+        score += input.dataValues.Deeds[i].rating
+      }
+      profileModel.update({score:score},{where:{id:req.params.id}})
+      console.log('==================================>>')
+      console.log(input.dataValues.Deeds[0].rating)
+      console.log(input.dataValues.Deeds[1].rating)
+      console.log(input.dataValues.Deeds[2].rating)
+      console.log(typeof input.dataValues.Deeds)
+      console.log('==================================>>')
+      // for (let key in input.dataValues.Deeds){
+      //   console.log(key)
+      // }
+    //   input.dataValues.Deeds.forEach(element => {
+    //     score += element.rating
+    //  });
+    //   profileModel.setDataValues('score',score)
+      // res.render("profile/userPage",{data})
+      res.send('berhasil cek db')
+    })
     .catch(err => res.send(err))
   }
 
