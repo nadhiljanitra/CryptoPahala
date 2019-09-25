@@ -14,8 +14,6 @@ class Profile{
     .then(success=>{
       profileModel.findOne({where:{username:req.body.username}})
       .then(row=>{
-        console.log(row)
-        res
         res.redirect(`/profile/${row.dataValues.id}/form`)
       })
     })
@@ -60,9 +58,12 @@ class Profile{
   profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
     .then(profile=>{
       let data = profile[0]
+      console.log("ini data===================================>")
+      console.log(data.dataValues.Deeds[0]);
+      console.log(data.dataValues.Deeds[1]);
       res.render("profile/userPage",{data})
       })
-    .catch(err => console.log(err))
+    .catch(err => res.send(err))
   }
 
 

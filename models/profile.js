@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         } , isEmail : true}
       },
     salt : DataTypes.STRING,
-    login : DataTypes.INTEGER
+    login : DataTypes.INTEGER,
+    score : DataTypes.INTEGER
   }, {hooks:{beforeCreate:(profile,options)=>{
     let salt = String(Math.random()*4444)
       let passwordInput = `${profile.dataValues.password}`
