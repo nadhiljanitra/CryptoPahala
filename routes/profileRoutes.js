@@ -13,8 +13,9 @@ routes.get('/login',(req,res)=>{
 })
 routes.post('/login',Profile.login)
 
-routes.get('/form', Deed.generateForm)
-routes.post('/form', Deed.getValues)
+
+routes.get('/:id/form', Deed.generateForm)
+routes.post('/:id/form', Deed.getValues)
 
 
 module.exports = routes;
