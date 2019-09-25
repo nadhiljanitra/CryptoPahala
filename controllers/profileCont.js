@@ -60,16 +60,17 @@ class Profile{
       let data = profile[0]
       let input = profile[0]
       let score = 0
+      console.log('==================================>>')
       for ( let i = 0; i < input.dataValues.Deeds.length; i++){
+        console.log(input.dataValues.Deeds[i].rating)
         score += input.dataValues.Deeds[i].rating
       }
       profileModel.update({score:score},{where:{id:req.params.id}})
-      console.log('==================================>>')
-      console.log(input.dataValues.Deeds[0].rating)
-      console.log(input.dataValues.Deeds[1].rating)
-      console.log(input.dataValues.Deeds[2].rating)
-      console.log(typeof input.dataValues.Deeds)
-      console.log('==================================>>')
+      .then((success)=>{
+        console.log(success)
+        res.send('berhasil cek db')
+      })
+      // profileModel.setDataValue('score',score)
       // for (let key in input.dataValues.Deeds){
       //   console.log(key)
       // }
@@ -77,8 +78,7 @@ class Profile{
     //     score += element.rating
     //  });
     //   profileModel.setDataValues('score',score)
-      // res.render("profile/userPage",{data})
-      res.send('berhasil cek db')
+      // res.render("profile/userPage",{data,subjectId:req.params.id})
     })
     .catch(err => res.send(err))
   }
