@@ -1,6 +1,4 @@
 const profileDeedModel = require('../models').ProfileDeed
-const profileModel = require('../models').Profile
-const DeedModel = require('../models').Deed
 
 class ProfileDeed {
 
@@ -26,13 +24,35 @@ class ProfileDeed {
       res.redirect(`/profile/${profileId}/userpage`)
     })
     .catch(err => console.log(err))
-
   }
 
+  static addDeeds(req, res) {
+    let profileId = req.params.id
 
+    ProfileDeed.findAll({
+      where: {
+        ProfileId: profileId
+      }
+    })
+      .then(result => {
+        res.send(result)
+      })
+      .catch(err => res.send(err))
+  }
 
-
-
+  static deleteDeed(req, res) {
+    profileDeedModel.destroy({
+      where: {
+        ProfileId: req.params.id,
+        DeedId: req.params.deedid
+      }
+    })
+    .then(result => {
+      // console.log(result)
+      res.redirect(`/profile/${req.params.id}/userpage`)})
+    .catch(err => {
+      res.send(err)})
+  }
 }
 
 module.exports = ProfileDeed

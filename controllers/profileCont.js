@@ -55,34 +55,53 @@ class Profile{
   }
 
   static viewProfile(req,res){
-  profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
-    .then(profile=>{
-      let data = profile[0]
-      let input = profile[0]
-      let score = 0
-      console.log('==================================>>')
-      for ( let i = 0; i < input.dataValues.Deeds.length; i++){
-        console.log(input.dataValues.Deeds[i].rating)
-        score += input.dataValues.Deeds[i].rating
-      }
-      profileModel.update({score:score},{where:{id:req.params.id}})
-      .then((success)=>{
-        console.log(success)
-        res.send('berhasil cek db')
+    profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
+      .then(profile=>{
+        let data = profile[0]
+        let input = profile[0]
+        let score = 0
+        
+        for ( let i = 0; i < input.dataValues.Deeds.length; i++){
+          score += input.dataValues.Deeds[i].rating
+        }
+        profileModel.update({score:score},{where:{id:req.params.id}})
+          .then(result => {
+            // res.send('success')
+            res.render("profile/userPage",{data: data, profileId: req.params.id})
+          })
+          .catch()
       })
-      // profileModel.setDataValue('score',score)
-      // for (let key in input.dataValues.Deeds){
-      //   console.log(key)
-      // }
-    //   input.dataValues.Deeds.forEach(element => {
-    //     score += element.rating
-    //  });
-    //   profileModel.setDataValues('score',score)
-      // res.render("profile/userPage",{data,subjectId:req.params.id})
-    })
-    .catch(err => res.send(err))
+      .catch(err => res.send(err))
   }
 
+
+  static edit(req,res){
+    let id = req.params.id
+    let err= null
+    res.render('./profile/updateProfile',{err,id})
+  }
+
+  static update(req,res){
+    // let profileId
+    // res.send(req.body)
+    // res.send(req.params.id)
+    let id= req.params.id
+    profileModel.findOne({where:{username:req.body.username}})
+    .then(row=>{
+      if (row){
+        let err='Username anda telah dipakai, coba lagi'
+        res.render(`./profile/updateProfile`,{err,id})
+      } else {
+        return profileModel.update({username:req.body.username},{where:{id:id}})
+      }
+    })
+    .then(data=>{
+      res.redirect(`/profile/${id}/userpage`)
+    })
+    .catch(err=>{
+      res.send(err)
+    })
+  }
 
 }
 
