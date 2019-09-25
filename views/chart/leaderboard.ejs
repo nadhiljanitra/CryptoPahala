@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Leaderboard</title>
+</head>
+<body>
+  <p> Leaderboard </p>
+  
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Nama</th>
+      <th>Skor</th>
+    </tr>
+    
+  <% for(let i = 0; i < leaderboard.length; i++) { %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= leaderboard[i].username %></td>
+      <td><%= leaderboard[i].score %></td>
+    </tr>
+  <% } %>
+  </table>
+    
+</body> 
+</html>
