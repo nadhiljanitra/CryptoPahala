@@ -14,6 +14,7 @@ class Profile{
       profileModel.findOne({where:{username:req.body.username}})
       .then(row=>{
         console.log(row)
+        res
         res.redirect(`/profile/${row.dataValues.id}/form`)
       })
     })
