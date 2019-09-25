@@ -55,16 +55,24 @@ class Profile{
   }
 
   static viewProfile(req,res){
-  profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
-    .then(profile=>{
-      let data = profile[0]
-      console.log("ini data===================================>")
-      console.log(data.dataValues.Deeds[0]);
-      console.log(data.dataValues.Deeds[1]);
-      res.render("profile/userPage",{data: data, subjectId: req.params.id})
+    profileModel.findAll({where:{id:req.params.id},include:[DeedModel]})
+      .then(profile=>{
+        let data = profile[0]
+        let input = profile[0]
+        let score = 0
+        
+        for ( let i = 0; i < input.dataValues.Deeds.length; i++){
+          score += input.dataValues.Deeds[i].rating
+        }
+        profileModel.update({score:score},{where:{id:req.params.id}})
+          .then(result => {
+            res.render("profile/userPage",{data: data, subjectId: req.params.id})
+          })
+          .catch()
       })
-    .catch(err => res.send(err))
+      .catch(err => res.send(err))
   }
+
 }
 
 module.exports = Profile;
