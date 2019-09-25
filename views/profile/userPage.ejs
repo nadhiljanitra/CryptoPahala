@@ -7,12 +7,31 @@
   <title>Document</title>
 </head>
 <body>
-  <%let score = 0 %>
-  <p>Username = <%= data.dataValues.username%></p>
-  <% data.dataValues.Deeds.forEach(element => { %>
-    <p>Deeds = <%= element.dataValues.name%> </p>
+  <p> Username = <%= data.dataValues.username%> </p>
+
+  <p>Tambah perbuatan</p>
+
+  <table>
+    <tr>
+      <th>Perbuatan</th>
+      <th>Opsi</th>
+    </tr>
+
+    <%let score = 0 %>
+    <% data.dataValues.Deeds.forEach(element => { %>
+    <tr>
+      <td>
+        <%= element.dataValues.name%>
+      </td>
+      <td>
+        <a href="/profile/<%= subjectId %>/userpage/delete/<%= element.dataValues.id%>">Delete</a>
+      </td>
+    </tr>
     <% score += element.dataValues.rating%>
- <% });%>
+    <% });%>
+
+  </table>
+    
  <p>Total score anda adalah</p>
  <h1><%= score%></h1>
     <a>klik disini untuk melihat posisi anda</a> 

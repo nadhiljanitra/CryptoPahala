@@ -61,12 +61,10 @@ class Profile{
       console.log("ini data===================================>")
       console.log(data.dataValues.Deeds[0]);
       console.log(data.dataValues.Deeds[1]);
-      res.render("profile/userPage",{data})
+      res.render("profile/userPage",{data: data, subjectId: req.params.id})
       })
     .catch(err => res.send(err))
   }
-
-
 }
 
 module.exports = Profile;
