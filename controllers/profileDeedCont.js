@@ -41,17 +41,17 @@ class ProfileDeed {
   }
 
   static deleteDeed(req, res) {
-    let profileId = req.params.id
-    let subjectId = req.params.subjectid
-
     profileDeedModel.destroy({
       where: {
-        ProfileId: profileId,
-        SubjectId: subjectId
+        ProfileId: req.params.id,
+        DeedId: req.params.deedid
       }
     })
-      .then(result => res.send(result))
-      .catch(err => res.send(err))
+    .then(result => {
+      // console.log(result)
+      res.redirect(`/profile/${req.params.id}/userpage`)})
+    .catch(err => {
+      res.send(err)})
   }
 }
 

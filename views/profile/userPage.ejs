@@ -8,7 +8,8 @@
 </head>
 <body>
   <p> Username = <%= data.dataValues.username%> </p>
-
+  <p>Bosen dengan username anda? silakan klik tombol dibawah ini biar diganti</p>
+  <a href="/profile/<%= profileId %>/updateProfile" style="color:magenta">klik aku mas</a>
   <p>Tambah perbuatan</p>
 
   <table>
@@ -24,7 +25,7 @@
         <%= element.dataValues.name%>
       </td>
       <td>
-        <a href="/profile/<%= subjectId %>/userpage/delete/<%= element.dataValues.id%>">Delete</a>
+        <a href="/profile/<%= profileId %>/userpage/delete/<%= element.dataValues.id%>">Delete</a>
       </td>
     </tr>
     <% score += element.dataValues.rating%>
@@ -36,5 +37,9 @@
  <h1><%= score%></h1>
     <a>klik disini untuk melihat posisi anda</a> 
     <a>//disini isinya ranking user, data statistik global</a>
+
+    <p>klik dibawah ini untuk menghapus user kamu</p>
+    <h1>delete</h1>
+  
 </body> 
 </html>
