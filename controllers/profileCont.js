@@ -15,6 +15,9 @@ class Profile{
     .then(success=>{
       profileModel.findOne({where:{username:req.body.username}})
       .then(row=>{
+        req.session.user={
+          name : req.body.username 
+        }
         res.redirect(`/profile/${row.dataValues.id}/form`)
       })
     })
@@ -37,10 +40,10 @@ class Profile{
         let newHash = hashPassword(req.body.password,row.salt)
         if(newHash===row.password){
           profileId = row.id
-          profileModel.update({login:1},{where:{username:req.body.username}})
-          .then(row=>{
+          req.session.user={
+            name : req.body.username 
+          }
             res.redirect(`${profileId}/userpage`)
-          })
         } else {
           let err=`username/password salah`
           res.render('./profile/profileLogin',{err})
@@ -89,11 +92,9 @@ class Profile{
         let err='Username anda telah dipakai, coba lagi'
         res.render(`./profile/updateProfile`,{err,id})
       } else {
-        console.log(req.params)
         profileModel.findOne({where:{id:req.params.id}})
         .then(row=>{
           let newHash = hashPassword(req.body.password,row.salt)
-          console.log(newHash);
           profileModel.update({username:req.body.username,password:newHash},{where:{id:id}})
           .then(data=>{
             res.redirect(`/profile/${id}/userpage`)
@@ -135,6 +136,13 @@ class Profile{
       res.send(err)
     })
   }
+
+  static logout(req,res){
+    req.session.destroy(()=>{
+      res.redirect('/')
+    })
+  }
+
 
 }
 

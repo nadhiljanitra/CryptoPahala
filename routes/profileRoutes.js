@@ -3,6 +3,15 @@ const Profile = require('../controllers/profileCont')
 const Deed = require('../controllers/deedCont')
 const ProfileDeed = require('../controllers/profileDeedCont')
 
+const loginMiddleware = (req,res,next)=>{
+  if (req.session.user){
+    next()
+  } else {
+    res.redirect('/')
+  }
+}
+
+
 let err=null
 
 routes.get('/add',(req,res)=>{
@@ -15,29 +24,26 @@ routes.get('/login',(req,res)=>{
 })
 routes.post('/login',Profile.login)
 
-// tampilin form yg perlu diisi
-routes.get('/:id/form', Deed.generateForm)
-// ambil ProfileId sama list of deeds -> masukin ke db profileDeed
+routes.get('/:id/form', loginMiddleware,Deed.generateForm)
 routes.post('/:id/form', ProfileDeed.storeValues)
 
-routes.get('/:id/userpage',Profile.viewProfile) // ini isinya adalah hasil lemparan dari login dan register. masukin datanya dari req.params.id. nanti di findAll({include})
+routes.get('/:id/userpage',loginMiddleware,Profile.viewProfile)
+routes.get('/:id/userpage/delete/:deedid', loginMiddleware,ProfileDeed.deleteDeed)
 
-routes.get('/:id/userpage/delete/:deedid', ProfileDeed.deleteDeed) //ini delete deed si user
-routes.get('/:id/addDeed',ProfileDeed.addDeed)
+routes.get('/:id/addDeed',loginMiddleware,ProfileDeed.addDeed)
 routes.post('/:id/addDeed',ProfileDeed.updateDeed)
 
-routes.get('/:id/updateProfile',Profile.edit)
+routes.get('/:id/updateProfile',loginMiddleware,Profile.edit)
 routes.post('/:id/updateProfile',Profile.update)
 
-routes.get('/:id/deleteProfile',(req,res)=>{
+routes.get('/:id/deleteProfile',loginMiddleware,(req,res)=>{
   res.render('./profile/deleteProfile',{err})
 })
 
-routes.post('/:id/deleteProfile',Profile.delete)
+routes.post('/:id/deleteProfile',loginMiddleware,Profile.delete)
+
+routes.get('/logout',loginMiddleware,Profile.logout)
 
 
-
-
-// routes.get('/leaderboard', ProfileDeed.sortByDeeds)
 
 module.exports = routes;
