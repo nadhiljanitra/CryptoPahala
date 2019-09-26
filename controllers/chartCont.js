@@ -7,10 +7,11 @@ class Chart {
   static showLeaderboard(req, res) {
     ProfileModel.findAll({
         order: [
-          ['id', 'DESC']
+          ['score', 'DESC']
       ]
     })
       .then(leaderboard => {
+        console.log(leaderboard);
         res.render('./chart/leaderboard', {leaderboard: leaderboard})
       })
       .catch(err => res.send(err))
