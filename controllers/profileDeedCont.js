@@ -1,4 +1,6 @@
 const profileDeedModel = require('../models').ProfileDeed
+const DeedModel =require('../models').Deed
+const profileModel = require('../models').Profile
 
 class ProfileDeed {
 
@@ -26,20 +28,7 @@ class ProfileDeed {
     .catch(err => console.log(err))
   }
 
-  static addDeeds(req, res) {
-    let profileId = req.params.id
-
-    ProfileDeed.findAll({
-      where: {
-        ProfileId: profileId
-      }
-    })
-      .then(result => {
-        res.send(result)
-      })
-      .catch(err => res.send(err))
-  }
-
+  
   static deleteDeed(req, res) {
     profileDeedModel.destroy({
       where: {
@@ -53,6 +42,35 @@ class ProfileDeed {
     .catch(err => {
       res.send(err)})
   }
+
+  static addDeed(req, res) {
+    let data
+    profileDeedModel.findAll({where:{ProfileId : req.params.id}},{include:profileModel})
+    .then(rows=>{
+      data = rows
+      return DeedModel.findAll()
+    })
+    .then(deeds=>{
+      let profileId = req.params.id
+      let check = false
+      res.render('./profile/updateForm',{data,deeds,profileId,check})
+    })
+    .catch(err=>{
+      res.send(err.message)
+    })
+  }
+
+  static updateDeed(req,res){
+    profileDeedModel.destroy({where:{ProfileId : req.params.id}})
+    .then(data=>{
+      ProfileDeed.storeValues(req,res)
+    })
+    .catch(err=>{
+      res.send(err)
+    })
+  }
+
+
 }
 
 module.exports = ProfileDeed

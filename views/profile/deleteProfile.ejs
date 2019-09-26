@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Delete Profile</title>
 </head>
 <body>
-  <form method="post" action="/profile/<%=id%>/updateProfile" class="container-fluid">
+  <p>Untuk dapat delete profile, masukkan kembali username dan password anda</p>
+  <form method="post" action="" class="container-fluid">
     <div class="form-group row">
       <label for="uname" class="col-sm-2 col-form-label">Username</label>
       <div class="col">
@@ -20,7 +21,7 @@
         <input type="text" class="form-control" id="password" placeholder="Password" name="password" required>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Update</button>
+      <button type="submit" class="btn btn-primary">Delete</button>
       <%if (err){%>
         <div style="color: red"><%= err %></div>
       <%}%>

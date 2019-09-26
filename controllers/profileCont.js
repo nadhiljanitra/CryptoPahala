@@ -1,5 +1,6 @@
 const profileModel = require('../models').Profile
 const DeedModel = require('../models').Deed
+const ProfileDeedModel = require('../models').ProfileDeed
 const hashPassword = require('../helpers/hashPassword')
 
 class Profile{
@@ -66,7 +67,6 @@ class Profile{
         }
         profileModel.update({score:score},{where:{id:req.params.id}})
           .then(result => {
-            // res.send('success')
             res.render("profile/userPage",{data: data, profileId: req.params.id})
           })
           .catch()
@@ -82,9 +82,6 @@ class Profile{
   }
 
   static update(req,res){
-    // let profileId
-    // res.send(req.body)
-    // res.send(req.params.id)
     let id= req.params.id
     profileModel.findOne({where:{username:req.body.username}})
     .then(row=>{
@@ -92,11 +89,47 @@ class Profile{
         let err='Username anda telah dipakai, coba lagi'
         res.render(`./profile/updateProfile`,{err,id})
       } else {
-        return profileModel.update({username:req.body.username},{where:{id:id}})
+        console.log(req.params)
+        profileModel.findOne({where:{id:req.params.id}})
+        .then(row=>{
+          let newHash = hashPassword(req.body.password,row.salt)
+          console.log(newHash);
+          profileModel.update({username:req.body.username,password:newHash},{where:{id:id}})
+          .then(data=>{
+            res.redirect(`/profile/${id}/userpage`)
+          })
+        })
       }
     })
-    .then(data=>{
-      res.redirect(`/profile/${id}/userpage`)
+    
+    .catch(err=>{
+      res.send(err)
+    })
+  }
+
+  static delete(req,res){
+    let profileId
+    profileModel.findOne({where:{username:req.body.username}})
+    .then(row=>{
+      if(row){
+        let newHash = hashPassword(req.body.password,row.salt)
+        if(newHash===row.password){
+          profileId = row.id
+          profileModel.destroy({where:{username:req.body.username}})
+          .then(row=>{
+            ProfileDeedModel.destroy({where:{ProfileId:profileId}})
+            .then(success=>{
+              res.render('./profile/deleteMessage')
+            })
+          })
+        } else {
+          let err=`username/password salah`
+          res.render('./profile/profileLogin',{err})
+        }
+      } else{
+        let err=`username/password salah`
+          res.render('./profile/profileLogin',{err})
+      }
     })
     .catch(err=>{
       res.send(err)
