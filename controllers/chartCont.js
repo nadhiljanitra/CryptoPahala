@@ -17,15 +17,51 @@ class Chart {
   }
 
   static sortByFreq(req, res) {
-    console.log('masuk');
     ProfileDeedModel.findAll({
       group: ['DeedId'],
       attributes: ['DeedId', [Sequelize.fn("COUNT", Sequelize.col("DeedId")), "DeedCount"]]
     })
       .then(sortResult => {
-        res.send(sortResult)
+        let deedIdArr = []
+        let deedFreqArr = []
+
+        sortResult.forEach(result => {
+          deedIdArr.push(result.DeedId)
+          deedFreqArr.push(Number(result.dataValues.DeedCount))
+        })
+
+        deedFreqArr.sort()
+
+        DeedModel.findAll({
+          where: {
+            id: deedIdArr
+          }
+        })
+          .then(result => {
+            let deedNamesArr = []
+
+            deedIdArr.forEach(deedId => {
+                result.forEach(deedName => {
+                  if (deedName.id == deedId) {
+                    deedNamesArr.push(deedName.name)
+                  }
+              })
+            })
+
+            let deeds = {deedFreqArr, deedNamesArr}
+            
+            res.render('chart/frequencyofdeeds', {deeds})
+          })
+          .catch(err => {
+            console.log(err)
+            res.send(err)
+          })
+        
       })
-      .catch(err => res.send(err))
+      .catch(err => {
+        console.log(err)
+        res.send(err)
+      })
   }
 }
 
