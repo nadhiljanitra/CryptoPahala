@@ -1,6 +1,16 @@
 const express = require('express')
 const app = express()
 const PORT = 3000
+const session = require('express-session')
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
+
 
 const profile = require('./routes/profileRoutes')
 const chart = require('./routes/chartRoutes')
