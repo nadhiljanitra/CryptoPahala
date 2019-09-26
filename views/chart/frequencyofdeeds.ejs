@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  </head>
+  <body>
+    <!-- <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+      <canvas id="myChart"></canvas>
+    </div> -->
+    <canvas id="myChart" width="200" height="200"></canvas>
+
+<div id="deeds" data-deeds="<%= JSON.stringify(deeds) %>"></div>
+
+
+<script>
+    var ctx = document.getElementById('myChart');
+    var el = document.getElementById('deeds');
+
+    var deeds = JSON.parse(el.dataset.deeds)
+    console.log(deeds);
+
+    const colorWheel = [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(245, 99, 132, 0.2)',
+          'rgba(54, 152, 235, 0.2)',
+          'rgba(255, 206, 76, 0.2)',
+          'rgba(75, 182, 192, 0.2)',
+          'rgba(143, 102, 255, 0.2)',
+          'rgba(255, 149, 64, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(245, 99, 132, 0.2)',
+          'rgba(54, 152, 235, 0.2)',
+          'rgba(255, 206, 76, 0.2)',
+          'rgba(75, 182, 192, 0.2)',
+          'rgba(143, 102, 255, 0.2)',
+          'rgba(255, 149, 64, 0.2)'
+        ]
+    
+    var colorChoice = []
+    var borderWidth = []
+
+    for(let i = 0; i < deeds.deedFreqArr.length; i++) {
+      colorChoice.push(colorWheel[i])
+      borderWidth.push(1)
+    }
+
+    var myPieChart = new Chart(ctx, {
+      type: 'pie',
+    data: {
+      labels: deeds.deedNamesArr, // ini adalah nama perbuatanannya
+      datasets: [{
+        // label: '# of Votes',
+        data: deeds.deedFreqArr, // ini adalah frekuensinya
+        backgroundColor: colorChoice,
+        borderColor: colorChoice,
+        borderWidth: borderWidth
+      }]
+    },
+    options: {
+      cutoutPercentage: 50
+    }
+  });
+  </script>
+
+  <a href="/chart/leaderboard">Leaderboard</a>
+
+  </body>
+  </html>
