@@ -6,29 +6,58 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="shortcut icon" type="image/ico" href="static/img/logo-blue.png"/>
   <link href="https://fonts.googleapis.com/css?family=Rubik:300&display=swap" rel="stylesheet">
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
   <link href="https://fonts.googleapis.com/css?family=Rubik:300&display=swap" rel="stylesheet">
   <link rel="shortcut icon" type="image/ico" href="/static/img/logo-blue.png"/>
-  <title>Registration Form - Cryptopahala</title>  
+<style>
+
+
+</style>
+
+  <title>Profile Page - Cryptopahala</title>  
 </head>
-
 <body>
-  <p> Halo <%= data.dataValues.username%>! </p>
-  <p>Bosen dengan username anda? Silakan klik tombol di bawah untuk mengganti</p>
-  <a href="/profile/<%= profileId %>/updateProfile" style="color:magenta">klik aku mas</a>
-  <p>Tambah perbuatan</p>
+  <div class="jumbotron bg-primary text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm float-left">
+            <h2> Halo <%= data.dataValues.username%>! </h2>
+        </div>
+        <div class="col-sm float-right">
+            <div class="dropdown show bg-success">
+                <a class="btn btn-secondary dropdown-toggle float-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="/profile/<%= profileId %>/updateProfile">update profile</a>
+                  <a class="dropdown-item" href="/profile/<%= profileId %>/deleteProfile">delete account</a>
+                  <a class="dropdown-item" href="/profile/logout">logout</a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div> 
+</div>
 
-  <table>
-    <tr>
-      <th>Perbuatan</th>
-      <th>Opsi</th>
-    </tr>
-
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">No</th>
+        <th scope="col">Perbuatan</th>
+        <th scope="col">Opsi</th>
+      </tr>
+    </thead>
     <%let score = 0 %>
-    <% data.dataValues.Deeds.forEach(element => { %>
-    <tr>
+    <% data.dataValues.Deeds.forEach((element,index) => { %>
+    <tr sscope="row">
+      <td class="text-center">
+        <%= index+1 %>.
+      </td>
       <td>
         <%= element.dataValues.name%>
       </td>
@@ -38,22 +67,28 @@
     </tr>
     <% score += element.dataValues.rating%>
     <% });%>
-
   </table>
-    <p><a href="/profile/<%= profileId %>/addDeed">add more deed</a></p>
- <p>Total score anda adalah</p>
- <h1><%= score%></h1>
-    <a>klik disini untuk melihat posisi anda</a> 
-
     
-    <a href="/chart/leaderboard">Leaderboard</a>
-    <a href="/chart/frequencyofdeeds">Deeds Frequency Chart</a>
+    <div class="text-center">
+      <p>Total score anda adalah</p>
+      <h1><%= score%></h1>
+    </div>
 
-    <p>klik dibawah ini untuk menghapus user kamu</p>
-    <h1><a href="/profile/<%= profileId %>/deleteProfile">delete</a></h1>
+    <div class="container" style="margin-top: 30px">
+      <div class="row">
+          <div class="col-sm">
+            <a class="btn btn-primary " role="button" href="/profile/<%= profileId %>/addDeed">Tambah Perbuatan Baru</a>
+          </div>
+          <div class="col-sm">
+              <a class="btn btn-primary" href="/chart/leaderboard" role="button">Leaderboard</a>
+          </div>
+          <div class="col-sm">
+              <a class="btn btn-primary" href="/chart/frequencyofdeeds" role="button">Deeds Frequency Chart</a>
+          </div>
+        </div>
+    </div>
 
-
-    <a href="/profile/logout">logout</a>
+ 
   
 </body> 
 </html>

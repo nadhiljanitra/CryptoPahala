@@ -19,7 +19,7 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">Centang hal-hal berikut yang pernah kamu lakukan:</th>
+                <th style="font-size: 20px" scope="col">Centang hal-hal berikut yang pernah kamu lakukan:</th>
               </tr>
             </thead>
             
@@ -29,7 +29,7 @@
                 <td>
                   <div class="custom-control custom-checkbox">
                       <input type="checkbox" id="deed<%= deed.id %>" name="<%= deed.id %>">
-                      <label class="custom-control-label" for="customCheck1"><%= deed.name %></label>
+                      <label class="custom-control-label" style="font-size: 20px" for="customCheck1"><%= deed.name %></label>
                   </div>
                 </td>
               </tr>
@@ -44,18 +44,5 @@
     </div>
   </form>
   
-  <!-- <h1>Centang hal-hal berikut yang pernah kamu lakukan:</h1>
-
-  <form action="/profile/<%= profileId %>/form" method="post">
-    <% deeds.forEach(deed => { %>
-      <tr>
-        <td><%= deed.name %></td>
-        <td><input type="checkbox" id="deed<%= deed.id %>" name="<%= deed.id %>"></td>
-        <br>
-      </tr>
-    <% }) %>
-    <input type="submit" value="Submit">
-  </form> -->
-
 </body>
 </html>

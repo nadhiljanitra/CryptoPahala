@@ -4,33 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Add more deed</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/profileForm.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik:300&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/ico" href="/static/img/logo-blue.png"/>
+  <title>Add More deed</title>
 </head>
 <body>
-  <h1>Silakan update deeds anda</h1>
-  <form action="/profile/<%= profileId %>/addDeed" method="post">
-    <% deeds.forEach(deed => { %>
-    <% let check = true %>
-      <% for (let i = 0; i < data.length; i++){ %>
-          <%if (data[i].DeedId === deed.id) {%>
-          <tr> <% check = false %>
-            <td><%= deed.name %></td>
-            <td><input type="checkbox" id="deed<%= deed.id %>" name="<%= deed.id %>" checked></td>
-            <br>
-          </tr>
-        <%} %>
-      <% } %>
-      <% if (check) { %>
-        <tr>
-          <td><%= deed.name %></td>
-          <td><input type="checkbox" id="deed<%= deed.id %>" name="<%= deed.id %>"></td>
-          <br>
-        </tr>
-        <% } %>
-  <% }) %>
-    <input type="submit" value="Submit">
-  </form>
 
+    <form action="/profile/<%= profileId %>/addDeed" method="post">
+      <div class="container" style="margin: 5% auto">
+          <div class="row">
+            <div class="col-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="font-size: 20px" scope="col">Silakan update deeds anda</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% deeds.forEach(deed => { %>
+                      <% let check = true %>
+                        <% for (let i = 0; i < data.length; i++){ %>
+                            <%if (data[i].DeedId === deed.id) {%>
+                  <tr> <% check = false %>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" id="deed<%= deed.id %>" style="font-size: 20px" name="<%= deed.id %>" checked>
+                          <label class="custom-control-label" style="font-size: 20px"for="customCheck1"><%= deed.name %></label>
+                      </div>
+                    </td>
+                  </tr>
+                  <%} %>
+                  <% } %>
+                  <% if (check) { %>
+                </tbody>
+              </form>          
+            </table>
+            <tr>
+                <label class="custom-control-label" style="font-size: 20px;font-weight: 200"for="customCheck1"><%= deed.name %></label>
+                <td><input type="checkbox" id="deed<%= deed.id %>"  name="<%= deed.id %>"></td>
+                <br>
+              </tr>
+              <% } %>
+        <% }) %>
+        <div style="margin: 10px 0">
+          <input type="submit" value="Submit">
+        </div>
+    
+            </div>
+          </div>
+        </div>
+      </form>
 
 </body>
 </html>
