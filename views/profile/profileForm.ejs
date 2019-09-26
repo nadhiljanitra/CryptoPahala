@@ -4,10 +4,47 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Registrasi</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/profileForm.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik:300&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" type="image/ico" href="/static/img/logo-blue.png"/>
+  <title>Registration Form - Cryptopahala</title>
 </head>
 <body>
-  <h1>Pernahkah kamu melakukan perbuatan-perbuatan ini? (Centang yang pernah kamu lakukan)</h1>
+
+  <form action="/profile/<%= profileId %>/form" method="post">
+  <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Centang hal-hal berikut yang pernah kamu lakukan:</th>
+              </tr>
+            </thead>
+            
+            <% deeds.forEach(deed => { %>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="custom-control custom-checkbox">
+                      <input type="checkbox" id="deed<%= deed.id %>" name="<%= deed.id %>">
+                      <label class="custom-control-label" for="customCheck1"><%= deed.name %></label>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </form>          
+        </table>
+        <input type="submit" value="Submit">
+
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  <!-- <h1>Centang hal-hal berikut yang pernah kamu lakukan:</h1>
 
   <form action="/profile/<%= profileId %>/form" method="post">
     <% deeds.forEach(deed => { %>
@@ -18,7 +55,7 @@
       </tr>
     <% }) %>
     <input type="submit" value="Submit">
-  </form>
+  </form> -->
 
 </body>
 </html>

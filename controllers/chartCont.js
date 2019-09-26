@@ -23,6 +23,9 @@ class Chart {
       attributes: ['DeedId', [Sequelize.fn("COUNT", Sequelize.col("DeedId")), "DeedCount"]]
     })
       .then(sortResult => {
+        
+        console.log('ini sort result ', sortResult);
+        
         let deedIdArr = []
         let deedFreqArr = []
 
@@ -32,6 +35,8 @@ class Chart {
         })
 
         deedFreqArr.sort()
+
+        console.log('ini deedFreqArr ', deedFreqArr);
 
         DeedModel.findAll({
           where: {
@@ -50,6 +55,8 @@ class Chart {
             })
 
             let deeds = {deedFreqArr, deedNamesArr}
+
+            console.log(deeds);
             
             res.render('chart/frequencyofdeeds', {deeds})
           })
